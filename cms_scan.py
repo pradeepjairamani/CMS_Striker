@@ -1,26 +1,22 @@
 from core.cms_detection import start
+from core.args_loader import argsload
 from core.color import blue # Blue for Warnings
 from core.color import red #Red For Errors
 from core.color import green #Green for output
 import os
 import importlib
 import argparse
-
+import getopt
+import sys
 
 def cms_scan():
    #interactive
    #Force CMS
    #no exploitdb
    #normal
-   #install searchsploit only
    #verbose
-   parser = argparse.ArgumentParser()
-   parser.add_argument("-t", help="Target Goes here")
-   args = parser.parse_args()
-   #print args
-   target = args.t
-   
-   #green(target)
+   args = argsload()
+   target = args.target
    if target is not "":
       cms_found = (start(target, "Joomla"))
       if cms_found == "":
