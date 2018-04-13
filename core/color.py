@@ -6,11 +6,11 @@ def green(message):
    finish()
 
 def red(message):
-   print("\033[1;31;40m [ERROR] " + message + " \n")
+   print("\033[1;31;40m [ERROR] " + message )
    finish()
 
 def blue(message):
-   print("\033[1;34;40m [WARN] " + message + " \n")
+   print("\033[1;34;40m [WARN] " + message + "\n")
    finish()
 
 def finish():

@@ -19,13 +19,15 @@ def cms_scan():
    args = parser.parse_args()
    #print args
    target = args.t
-   green(target)
-   #target = "http://www.poornima.edu.in"
+   
+   #green(target)
    if target is not "":
-      cms_found = (start(target, "Wordpress"))
+      cms_found = (start(target, "Joomla"))
       if cms_found == "":
-         red ("CMS not Found, Try forcing")
+         red ("\nCMS not Found, Try forcing")
       else:
+         green("\n Target : "+target)
+         green("CMS : " + cms_found)
          plugins = os.listdir("libs/"+cms_found)
          plugins.remove("__init__.py")
          plugins.remove("__init__.pyc")
