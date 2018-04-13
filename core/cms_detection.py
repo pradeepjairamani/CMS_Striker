@@ -1,3 +1,7 @@
+from core.color import red
+from core.color import blue
+import sys
+
 def start(target, cms_name):
             if cms_name is not "":
                return cms_name
@@ -23,16 +27,17 @@ def start(target, cms_name):
             req_drupal_url = target + "/sites/default/settings.php"
             try:
                user_agent = {'User-agent': random.choice(user_agent_list)}
-               req = requests.get(req_url, timeout=10, headers=user_agent)
+               req = requests.get(req_url, timeout=10, headers=user_agent,  verify = False)
                code_for_404 = req.text
                user_agent = {'User-agent': random.choice(user_agent_list)}
-               req_wordpress = requests.get(req_wordpress_url, timeout=10, headers=user_agent)
+               req_wordpress = requests.get(req_wordpress_url, timeout=10, headers=user_agent, verify = False)
                user_agent = {'User-agent': random.choice(user_agent_list)}
-               req_joomla = requests.get(req_joomla_url, timeout=10, headers=user_agent)
+               req_joomla = requests.get(req_joomla_url, timeout=10, headers=user_agent, verify = False)
                user_agent = {'User-agent': random.choice(user_agent_list)}
-               req_drupal = requests.get(req_drupal_url, timeout=10, headers=user_agent)
+               req_drupal = requests.get(req_drupal_url, timeout=10, headers=user_agent, verify = False)
             except requests.exceptions.RequestException as e: 
-               return False
+               red("Requests cannot be completed, Check your internet connection or website")
+               sys.exit(0)
             if req_wordpress.text != code_for_404 or req_wordpress.status_code == 403:
                 return "Wordpress"
             elif req_drupal.status_code != code_for_404 or req_drupal.status_code == 403:
@@ -40,5 +45,5 @@ def start(target, cms_name):
             elif req_joomla.status_code != code_for_404 or req_joomla.status_code == 403:
                 return "Joomla"
             else:
-                print ("Error No CMS Found")
-                return False
+                red ("Error CMS not found, Try Forcing")
+                sys.exit(0)

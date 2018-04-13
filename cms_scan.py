@@ -11,14 +11,25 @@ import sys
 
 def cms_scan():
    #interactive
-   #Force CMS
-   #no exploitdb
    #normal
    #verbose
    args = argsload()
    target = args.target
+   if args.force:
+      if args.force.lower()[0] == "j":
+         force = "Joomla"
+      elif args.force.lower()[0] == "w":
+         force = "Wordpress"
+      elif args.force.lower()[0] == "d":
+         force = "Drupal"
+      else:
+         red(" Wrong Choice : " + args.force)
+         force = ""
+         blue(" Using Automatic CMS detection")
+   else:
+      force = ""
    if target is not "":
-      cms_found = (start(target, "Joomla"))
+      cms_found = (start(target, force))
       if cms_found == "":
          red ("\nCMS not Found, Try forcing")
       else:
@@ -30,7 +41,6 @@ def cms_scan():
          green("Plugins loaded : " + str(len(plugins))) 
          for plugin in plugins:
             engine = "libs." + cms_found + "." + plugin + ".engine"
-            #green(engine)
             exploit = importlib.import_module(engine, ".")
             exploit.run(target)            
 
